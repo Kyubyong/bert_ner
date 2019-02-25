@@ -3,7 +3,7 @@ import torch.nn as nn
 import torch.optim as optim
 from torch.utils import data
 from model import Net
-from data_load import NerDataset, pad, hp
+from data_load import NerDataset, pad, hp, device
 import os
 import numpy as np
 
@@ -110,7 +110,7 @@ def eval(model, iterator, f):
 
 if __name__=="__main__":
     model = Net()
-    model.to('cuda')
+    model.to(device)
 
     train_dataset = NerDataset("conll2003/train.txt")
     eval_dataset = NerDataset("conll2003/valid.txt")
