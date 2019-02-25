@@ -6,7 +6,7 @@ It's even impressive, allowing for the fact that they don't use any autoregressi
 We try to reproduce the result in a simple manner.
 
 ## Requirements
-* python>=3.4 (Let's move on to python 3 if you still use python 2)
+* python>=3.6 (Let's move on to python 3 if you still use python 2)
 * pytorch==1.0
 * pytorch_pretrained_bert==0.6.1
 * numpy>=1.15.4
