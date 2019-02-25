@@ -4,9 +4,8 @@ from data_load import hp, device
 from pytorch_pretrained_bert import BertModel
 
 class Net(nn.Module):
-    def __init__(self, training=False):
+    def __init__(self):
         super().__init__()
-        self.training = training
         self.bert = BertModel.from_pretrained('bert-base-cased')
         self.bert.to(device)
         self.bert.eval()
