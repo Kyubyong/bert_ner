@@ -2,7 +2,7 @@
 
 I know that you know [BERT](https://arxiv.org/abs/1810.04805).
 In the great paper, the authors claim that the pretrained models do great in NER without fine-tuning.
-It's even impressive, allowing for the fact that they don't use any autoregressive technique or prediction-conditioned algorithm like CRF.
+It's even impressive, allowing for the fact that they don't use any prediction-conditioned algorithms like CRF.
 We try to reproduce the result in a simple manner.
 
 ## Requirements
