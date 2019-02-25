@@ -8,6 +8,7 @@ We try to reproduce the result in a simple manner.
 ## Requirements
 * python>=3.4 (Let's move on to python 3 if you still use python 2)
 * pytorch==1.0
+* pytorch_pretrained_bert==0.6.1
 * numpy>=1.15.4
 
 ## Training & Evaluating
