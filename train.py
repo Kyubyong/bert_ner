@@ -109,7 +109,7 @@ def eval(model, iterator, f):
     return precision, recall, f1
 
 if __name__=="__main__":
-    model = Net(training=False)
+    model = Net()
     model.to('cuda')
 
     train_dataset = NerDataset("conll2003/train.txt")
