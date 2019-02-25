@@ -25,7 +25,8 @@ python train.py
 ```
 
 ## Results in the paper
-<img src="bert_ner.png" align="left">
+<img src="bert_ner.png">
+
 
 ## Results
 
