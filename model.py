@@ -25,13 +25,9 @@ class Net(nn.Module):
         x = x.to(device)
         y = y.to(device)
 
-        if self.train:
+        with torch.no_grad():
             encoded_layers, _ = self.bert(x)
             enc = encoded_layers[-1]
-        else:
-            with torch.no_grad():
-                encoded_layers, _ = self.bert(x)
-                enc = encoded_layers[-1]
         enc, _ = self.rnn(enc)
         logits = self.fc(enc)
         y_hat = logits.argmax(-1)
