@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="f1a7024f-ac4c-4bd0-8e4c-06e07de89e3e" name="bert_ner" url="http://brain-cluster-gpu2.dakao.io">
+        <fileTransfer host="brain-cluster-gpu2.dakao.io" port="12435" privateKey="$USER_HOME$/.ssh/id_rsa_braincloud" accessType="SFTP" keyPair="true">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+          <option name="port" value="12435" />
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
