@@ -24,6 +24,9 @@ It should be extracted to `conll2003/` folder automatically.
 python train.py
 ```
 
+## Results in the paper
+<img src="bert_ner.png" align="left">
+
 ## Results
 
 * You can check the classification outputs in [checkpoints](checkpoints).
