@@ -15,7 +15,7 @@ def train(model, iterator, optimizer, criterion):
         optimizer.zero_grad()
         logits, y, _ = model(x, y) # logits: (N, T, VOCAB), y: (N, T)
 
-        logits = logits.view(-1, logits.shape[-1]) # (N*T, 2)
+        logits = logits.view(-1, logits.shape[-1]) # (N*T, VOCAB)
         y = y.view(-1)  # (N*T,)
 
         loss = criterion(logits, y)
