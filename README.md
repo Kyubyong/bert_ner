@@ -1,4 +1,4 @@
-# PyTorch Implementation of Feature Based NER with pretrained Bert
+# PyTorch Implementation of NER with pretrained Bert
 
 I know that you know [BERT](https://arxiv.org/abs/1810.04805).
 In the great paper, the authors claim that the pretrained models do great in NER.
