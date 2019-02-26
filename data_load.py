@@ -28,18 +28,10 @@ from torch.utils import data
 
 from pytorch_pretrained_bert import BertTokenizer
 
-class Hparams:
-    VOCAB =('<PAD>', 'O', 'I-LOC', 'B-PER', 'I-PER', 'I-ORG', 'I-MISC', 'B-MISC', 'B-LOC', 'B-ORG')
-    tag2idx = {tag:idx for idx, tag in enumerate(VOCAB)}
-    idx2tag = {idx:tag for idx, tag in enumerate(VOCAB)}
-    batch_size = 128
-    lr = 0.0001
-    n_epochs=30
-    tokenizer = BertTokenizer.from_pretrained('bert-base-cased', do_lower_case=False)
-
-
-hp = Hparams()
-device = 'cuda' if torch.cuda.is_available() else 'cpu'
+tokenizer = BertTokenizer.from_pretrained('bert-base-cased', do_lower_case=False)
+VOCAB = ('<PAD>', 'O', 'I-LOC', 'B-PER', 'I-PER', 'I-ORG', 'I-MISC', 'B-MISC', 'B-LOC', 'B-ORG')
+tag2idx = {tag: idx for idx, tag in enumerate(VOCAB)}
+idx2tag = {idx: tag for idx, tag in enumerate(VOCAB)}
 
 class NerDataset(data.Dataset):
     def __init__(self, fpath):
@@ -65,13 +57,13 @@ class NerDataset(data.Dataset):
         x, y = [], [] # list of ids
         is_heads = [] # list. 1: the token is the first piece of a word
         for w, t in zip(words, tags):
-            tokens = hp.tokenizer.tokenize(w) if w not in ("[CLS]", "[SEP]") else [w]
-            xx = hp.tokenizer.convert_tokens_to_ids(tokens)
+            tokens = tokenizer.tokenize(w) if w not in ("[CLS]", "[SEP]") else [w]
+            xx = tokenizer.convert_tokens_to_ids(tokens)
 
             is_head = [1] + [0]*(len(tokens) - 1)
 
             t = [t] + ["<PAD>"] * (len(tokens) - 1)  # <PAD>: no decision
-            yy = [hp.tag2idx[each] for each in t]  # (T,)
+            yy = [tag2idx[each] for each in t]  # (T,)
 
             x.extend(xx)
             is_heads.extend(is_head)

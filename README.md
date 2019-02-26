@@ -1,8 +1,8 @@
 # PyTorch Implementation of Feature Based NER with pretrained Bert
 
 I know that you know [BERT](https://arxiv.org/abs/1810.04805).
-In the great paper, the authors claim that the pretrained models do great in NER without fine-tuning.
-It's even impressive, allowing for the fact that they don't use any prediction-conditioned algorithms like CRF.
+In the great paper, the authors claim that the pretrained models do great in NER.
+It's even impressive, allowing for the fact that they don't use any prediction-conditioned algorithms like CRFs.
 We try to reproduce the result in a simple manner.
 
 ## Requirements
@@ -19,24 +19,36 @@ bash download.sh
 ```
 It should be extracted to `conll2003/` folder automatically.
 
-* STEP 2. Run the command below to train and evaluate.
+* STEP 2a. Run the command if you want to do the feature-based approach.
 ```
-python train.py
+python train.py --logdir checkpoints/feature --batch_size 128 --top_rnns --lr 1e-4 --n_epochs 30
+```
+
+* STEP 2b. Run the command if you want to do the fine-tuning approach.
+```
+python train.py --logdir checkpoints/finetuning --finetuning --batch_size 32 --lr 5e-5 --n_epochs 3
 ```
 
 ## Results in the paper
+
+* Feature-based approach
+
 <img src="bert_ner.png">
 
+* Fine-tuning
+
+<img src="bert_ner_finetuning.png">
 
 ## Results
 
+* F1 scores on conll2003 valid dataset are reported.
 * You can check the classification outputs in [checkpoints](checkpoints).
 
-|epoch|F1 score on conll2003 valid|
-|--|--|
-|1|0.2|
-|2|0.75|
-|3|0.84|
+|epoch|feature-based|fine-tuning|
+|--|--|--|
+|1|0.2|0.95|
+|2|0.75|0.95|
+|3|0.84|0.96|
 |4|0.88|
 |5|0.89|
 |6|0.90|

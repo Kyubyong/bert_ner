@@ -1,20 +1,21 @@
 import torch
 import torch.nn as nn
-from data_load import hp, device
 from pytorch_pretrained_bert import BertModel
 
 class Net(nn.Module):
-    def __init__(self):
+    def __init__(self, top_rnns=False, vocab_size=None, device='cpu', finetuning=False):
         super().__init__()
         self.bert = BertModel.from_pretrained('bert-base-cased')
-        self.bert.to(device)
-        self.bert.eval()
-        self.bert = nn.DataParallel(self.bert)
-        self.rnn = nn.LSTM(bidirectional=True, num_layers=2, input_size=768, hidden_size=768//2, batch_first=True)
-        self.fc = nn.Linear(768, len(hp.VOCAB))
-        self.fc = nn.DataParallel(self.fc)
 
-    def forward(self, x, y):
+        self.top_rnns=top_rnns
+        if top_rnns:
+            self.rnn = nn.LSTM(bidirectional=True, num_layers=2, input_size=768, hidden_size=768//2, batch_first=True)
+        self.fc = nn.Linear(768, vocab_size)
+
+        self.device = device
+        self.finetuning = finetuning
+
+    def forward(self, x, y, ):
         '''
         x: (N, T). int64
         y: (N, T). int64
@@ -22,13 +23,22 @@ class Net(nn.Module):
         Returns
         enc: (N, T, VOCAB)
         '''
-        x = x.to(device)
-        y = y.to(device)
+        x = x.to(self.device)
+        y = y.to(self.device)
 
-        with torch.no_grad():
+        if self.training and self.finetuning:
+            # print("->bert.train()")
+            self.bert.train()
             encoded_layers, _ = self.bert(x)
             enc = encoded_layers[-1]
-        enc, _ = self.rnn(enc)
+        else:
+            self.bert.eval()
+            with torch.no_grad():
+                encoded_layers, _ = self.bert(x)
+                enc = encoded_layers[-1]
+
+        if self.top_rnns:
+            enc, _ = self.rnn(enc)
         logits = self.fc(enc)
         y_hat = logits.argmax(-1)
         return logits, y, y_hat
